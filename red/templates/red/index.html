@@ -1,0 +1,23 @@
+{% for i in list %}
+<li>{{i}}</li>
+{% endfor %}
+
+<br><br><br><br>
+
+
+<form method="POST" action={% url 'fav' %}>
+    {% csrf_token %}
+    <li>
+        <label for="no1">Enter first number </label>
+        <input type="text" id="no1" name="no1">
+        <br><br>
+    </li>
+
+    <li>
+        <label for="no2">Enter second number </label>
+        <input type="text" id="no2" name="no2">
+        <br><br>
+    </li>
+
+    <input type="submit">
+</form>
