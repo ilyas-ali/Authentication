@@ -1,29 +1,30 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from .models import People
 
 def index(request):
-    list=[]
-    for i in range(1,11):
-        list.append(i)
-    context={'list':list}
-    return render(request,"red/index.html",context)
-    
+        if request.method=="POST":
+            fname1=request.POST.get('fname')
+            lname1=request.POST.get('lname')
+            email1=request.POST.get('email')
+            num1=request.POST.get('num')
+        
+            pp=People(fname=fname1,lname=lname1,email=email1,num=num1)
+            pp.save()
+            
+
+        return render(request,"red/index.html")
 
 def fav(request):
-    if(request.method== 'POST'):
-        no1=request.POST.get('no1')
-        no2=request.POST.get('no2')
-
-        no11=int(no1)
-        no22=int(no2)
-
-        if(no11<no22):
-            list=[]
-            for i in range(no11,no22):
-                list.append(i)
-            context={'list':list}
-            return render(request,"red/fav.html",context)
+    if request.method=="POST":
+        email1=request.POST.get('email')
+        people=People.objects.filter(email=email1).first()
         
-        elif(no22<no11):
-            return HttpResponse("Fail")
-
+        if people!=None:
+            context={"fname":people.fname,"lname":people.lname,"email":people.email,"num":people.num}    
+            return render(request,"red/yes.html",context)
+            
+        elif people==None:
+            return render(request,"red/no.html")
+    
+    return render(request,"red/fav.html")

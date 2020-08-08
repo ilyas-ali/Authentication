@@ -1,3 +1,12 @@
-{% for i in list %}
-<li>{{i}}</li>
-{% endfor %}
+<form method="POST">
+    {% csrf_token %}
+    <li>
+        <label for="email">Enter email </label>
+        <input type="email" id="email" name="email">
+        <br><br>
+    </li>
+
+    <input type="submit">
+</form>
+<br><br><br>
+<h2>If Not registered <a href={% url "index" %}>click here</a></h2>
